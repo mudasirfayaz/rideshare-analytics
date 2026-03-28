@@ -33,7 +33,7 @@ As a data analyst for a fictional rideshare company, I investigated key business
 |---|---|---|
 | 1 | How is monthly revenue trending, and how volatile is it? | ✅ Done |
 | 2 | When is demand highest — by hour and day of week? | ✅ Done |
-| 3 | Who are the top-performing drivers, and who is underperforming? | ⏳ Pending |
+| 3 | Who are the top-performing drivers, and who is underperforming? | ✅ Done |
 | 4 | Who are our most valuable riders, and are we retaining them? | ⏳ Pending |
 | 5 | Are payments completing successfully, and which methods dominate? | ⏳ Pending |
 
@@ -53,6 +53,15 @@ As a data analyst for a fictional rideshare company, I investigated key business
 - **Highest fares occur at 7am ($54.03), 8am ($53.27), and 7pm ($57.76)** — surge pricing activates during commute hours and late night, not just on volume alone
 - **Operations insight:** driver availability should be prioritised at 7am, 8am, 6pm, and 7pm for maximum revenue impact
  
+### Q3 — Driver Performance
+- **338 drivers** qualified (10+ trips minimum threshold)
+- **Nancy Price** is the top earner ($6,099) with a 10.4% cancellation rate — the best all-round performer in the top 5
+- **Samuel Reed** (rank 4) and **Charles Cook** (rank 13) both exceed 21% cancellation rate — flagged for HR review
+- **Highest cancellation rate: Ryan Hall (30.3%)** — ranks 323rd in revenue, a clear underperformer on both metrics
+- **Susan Cook (28.4%)** stands out as the most concerning — a near-perfect rating (4.98) yet the 4th highest cancellation rate, suggesting she accepts trips then cancels them
+- **Lowest cancellation rate: Emma Gray (0.0%)** and **Angela Flores (4.5%)** — reliable drivers worth rewarding
+- **Driver rating does NOT correlate with revenue** — Nancy Price earns the most with only a 3.97 rating, while two perfect 5.0-rated drivers (Patricia Bailey, Cynthia Cook) rank 18th and 40th in revenue
+- **Revenue range is wide** — top driver earns $6,099 vs. bottom driver $736, an 8x difference across the fleet
 
 ---
 
@@ -70,13 +79,13 @@ As a data analyst for a fictional rideshare company, I investigated key business
 rideshare-analytics/
 │
 ├── data/
-│   ├── rideshare.db
-│   └── schema.sql
+│   └── rideshare.db
 │
 ├── sql/
 │   ├── 01_exploration.sql
 │   ├── 02_revenue_trend.sql
 │   ├── 03_peak_hours_days.sql
+│   ├── 04_driver_performance.sql
 │   └── ...
 │
 ├── powerbi/
