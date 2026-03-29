@@ -2,24 +2,28 @@ USE rideshare;
 
 SELECT * FROM trips LIMIT 5;
 
--- 1. How many trips exist per status, and what % of total does each represent?
+-- 1. Status Distribution
 SELECT 
-    status, 
-    COUNT(trip_id) as total_trips,
-    COUNT(trip_id) * 100.0 / (SELECT COUNT(*) FROM trips) AS percentage
-FROM trips 
-GROUP BY status;
+    COUNT(*) AS total_trips,
+    COUNT(CASE WHEN status = 'completed' THEN 1 END) AS completed_trips,
+    COUNT(CASE WHEN status = 'cancelled' THEN 1 END) AS cancelled_trips,
+    ROUND(COUNT(CASE WHEN status = 'completed' THEN 1 END) * 100.0 / COUNT(*), 2) AS completion_rate,
+    ROUND(COUNT(CASE WHEN status = 'cancelled' THEN 1 END) * 100.0 / COUNT(*), 2) AS cancellation_rate
+FROM trips;
 
--- 2. What is the date range of the data, and how many distinct months does it cover?
+-- 2. Date Coverage
 SELECT 
-    DISTINCT DATE_FORMAT(requested_at, "%Y-%m") AS months
-FROM trips
-ORDER BY months;
+    DATE_FORMAT(MIN(requested_at), "%Y-%m-%d") AS start_date,
+    DATE_FORMAT(MAX(requested_at), "%Y-%m-%d") AS end_date,
+    TIMESTAMPDIFF(MONTH, MIN(requested_at), MAX(requested_at)) + 1 AS total_months
+FROM trips;
 
--- 3. What is the average, min, and max total_fare for completed trips?
+-- 3. Fare Distribution
 SELECT 
-    ROUND(AVG(total_fare), 2) AS avg_fare, 
-    MIN(total_fare) AS min_fare, 
-    MAX(total_fare) AS max_fare
+    ROUND(AVG(total_fare), 2) AS avg_fare,
+    ROUND(STDDEV(total_fare), 2) AS std_dev,
+    COUNT(*) AS total_completed_trips
 FROM trips
-WHERE status = 'completed'
+WHERE status = 'completed';
+
+SELECT * FROM trips WHERE total_fare IS NULL;
